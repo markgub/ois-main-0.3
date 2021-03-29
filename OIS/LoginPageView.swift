@@ -8,6 +8,8 @@
 import SwiftUI
 import SwiftSoup
 import WebKit
+import RealityKit
+import ARKit
 
 let lightGreyColor = Color(red: 239.0/255.0, green: 243.00/255.0, blue: 244.0/255.0)
 
@@ -186,13 +188,6 @@ struct PageCamera: View{
     }
 }
 
-struct PageAR: View {
-    var body: some View{
-        VStack{
-            Text("Liitrealsus")
-        }
-    }
-}
 
 struct CaptureImageView {
     /// MARK: - Properties
@@ -207,12 +202,163 @@ extension CaptureImageView: UIViewControllerRepresentable {
     func makeUIViewController(context: UIViewControllerRepresentableContext<CaptureImageView>) -> UIImagePickerController {
         let picker = UIImagePickerController()
         picker.delegate = context.coordinator
-        picker.sourceType = .camera
+        //picker.sourceType = .camera
         return picker
     }
     
     func updateUIViewController(_ uiViewController: UIImagePickerController,
             context: UIViewControllerRepresentableContext<CaptureImageView>) {
         
+    }
+}
+
+struct PageAR: View {
+    @State private var isPlacementEnabled = false
+    @State private var selectedModel: String?
+    @State private var modelConfirmedForPlacement: String?
+    
+    var models: [String] = {
+        let filemanager = FileManager.default
+        
+        guard let path = Bundle.main.resourcePath, let files = try? filemanager.contentsOfDirectory(atPath: path) else {
+            return []
+        }
+        
+        var availableModels: [String] = []
+        for filename in files where filename.hasSuffix("usdz"){
+            let modelName = filename.replacingOccurrences(of: ".usdz", with: "")
+            availableModels.append(modelName)
+        }
+        
+        return availableModels
+    }()
+    
+    var body: some View{
+        ZStack(alignment: .bottom){
+            ARViewContainer(modelConfirmedForPlacement: self.$modelConfirmedForPlacement)
+            
+            if self.isPlacementEnabled {
+                PlacementButtonsView(isPlacementEnabled: self.$isPlacementEnabled, selectedModel: self.$selectedModel, modelConfirmedForPlacement: self.$modelConfirmedForPlacement)
+            } else {
+                ModelPickerView(isPlacementEnabled: self.$isPlacementEnabled, selectedModel: self.$selectedModel, models: self.models)
+            }
+        }
+    }
+}
+
+
+struct ARViewContainer: UIViewRepresentable {
+    @Binding var modelConfirmedForPlacement: String?
+    
+    func makeUIView(context: Context) -> ARView {
+        let arView = ARView(frame: .zero)
+        
+        let config = ARWorldTrackingConfiguration()
+        config.planeDetection = [.horizontal, .vertical]
+        config.environmentTexturing = .automatic
+        
+        if ARWorldTrackingConfiguration.supportsSceneReconstruction(.mesh){
+            config.sceneReconstruction = .mesh
+        }
+        
+        //The actual real device is supposed to be selected for this to work
+        //Otherwise you will get error: Value of type "ARView" has no member "session"
+        arView.session.run(config)
+        
+        return arView
+    }
+    
+    func updateUIView(_ uiView: ARView, context: Context) {
+        if let modelName = self.modelConfirmedForPlacement{
+            print("Debug: adding model to scene - \(modelName)")
+            
+            let filename = modelName + ".usdz"
+            let modelEntity = try! ModelEntity.loadModel(named: filename)
+            //Also needs real device
+            let anchorEntity = AnchorEntity(plane: .any)
+            anchorEntity.addChild(modelEntity)
+            
+            uiView.scene.addAnchor(anchorEntity)
+            
+            DispatchQueue.main.async {
+                self.modelConfirmedForPlacement = nil
+            }
+        }
+    }
+}
+
+struct ModelPickerView: View {
+    @Binding var isPlacementEnabled: Bool
+    @Binding var selectedModel: String?
+    
+    var models: [String]
+    
+    var body: some View{
+        ScrollView(.horizontal, showsIndicators: false){
+            HStack(spacing: 30){
+                ForEach(0 ..< self.models.count) { index in
+                    Button(action: {
+                        print("Debuf: selected model with name:\(self.models[index])")
+                        
+                        self.selectedModel = self.models[index]
+                        
+                        self.isPlacementEnabled = true
+                    }){
+                        Image(uiImage: UIImage(named: self.models[index])!)
+                            .resizable()
+                            .frame(height: 80)
+                            .aspectRatio(1/1, contentMode: .fit)
+                            .background(Color.white)
+                            .cornerRadius(12)
+                    }.buttonStyle (PlainButtonStyle())
+                }
+            }
+        }
+        .padding(20)
+        .background(Color.black.opacity(0.5))
+    }
+}
+
+struct PlacementButtonsView: View{
+    @Binding var isPlacementEnabled: Bool
+    @Binding var selectedModel: String?
+    @Binding var modelConfirmedForPlacement: String?
+    
+    var body: some View{
+        HStack{
+            //Cancel Button
+            Button(action: {
+                print("DEBUG: cancel model placement")
+                
+                self.resetPlacementParameters()
+            }){
+                Image(systemName: "xmark")
+                    .frame(width: 60, height: 60)
+                    .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
+                    .background(Color.white.opacity(0.75))
+                    .cornerRadius(30)
+                    .padding(20)
+            }
+            
+            //Confirm button
+            Button(action: {
+                print("DEBUG: confirm model placement")
+                
+                self.modelConfirmedForPlacement = self.selectedModel
+                
+                self.resetPlacementParameters()
+            }){
+                Image(systemName: "checkmark")
+                    .frame(width: 60, height: 60)
+                    .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
+                    .background(Color.white.opacity(0.75))
+                    .cornerRadius(30)
+                    .padding(20)
+            }
+        }
+    }
+    func resetPlacementParameters(){
+        self.isPlacementEnabled = true
+        self.selectedModel = nil
     }
 }

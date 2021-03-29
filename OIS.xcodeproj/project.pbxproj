@@ -17,6 +17,8 @@
 		8BFEAD1E25FE4F0800C364E0 /* OISTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BFEAD1D25FE4F0800C364E0 /* OISTests.swift */; };
 		8BFEAD2925FE4F0800C364E0 /* OISUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BFEAD2825FE4F0800C364E0 /* OISUITests.swift */; };
 		AD24A48051C70D82F36E67FD /* Pods_OIS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F0C34177D89E5A022F776A9 /* Pods_OIS.framework */; };
+		CE4418DF2611E66100F3FE4D /* tv_retro.usdz in Resources */ = {isa = PBXBuildFile; fileRef = CE4418DE2611E66100F3FE4D /* tv_retro.usdz */; };
+		CE4418E42611E6C900F3FE4D /* gramophone.usdz in Resources */ = {isa = PBXBuildFile; fileRef = CE4418E32611E6C900F3FE4D /* gramophone.usdz */; };
 		CEDB00CE2611C8DF00D4297D /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDB00CD2611C8DF00D4297D /* Coordinator.swift */; };
 /* End PBXBuildFile section */
 
@@ -56,6 +58,8 @@
 		8BFEAD2425FE4F0800C364E0 /* OISUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OISUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8BFEAD2825FE4F0800C364E0 /* OISUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OISUITests.swift; sourceTree = "<group>"; };
 		8BFEAD2A25FE4F0800C364E0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CE4418DE2611E66100F3FE4D /* tv_retro.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; name = tv_retro.usdz; path = ../../../../Downloads/tv_retro.usdz; sourceTree = "<group>"; };
+		CE4418E32611E6C900F3FE4D /* gramophone.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; name = gramophone.usdz; path = ../../../../Downloads/gramophone.usdz; sourceTree = "<group>"; };
 		CEDB00CD2611C8DF00D4297D /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -121,6 +125,7 @@
 			children = (
 				8BFEAD0B25FE4F0500C364E0 /* OISApp.swift */,
 				8BFEAD0D25FE4F0500C364E0 /* LoginPageView.swift */,
+				CE4418DD2611E62700F3FE4D /* Models */,
 				8BF1D4C725FEB6DF003A4724 /* MainPageView.swift */,
 				8B75C7FA25FEC79200DC6D3B /* LessonsShortView.swift */,
 				8B75C7FF25FECBA600DC6D3B /* LatestGradesView.swift */,
@@ -164,6 +169,15 @@
 				1F0C34177D89E5A022F776A9 /* Pods_OIS.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		CE4418DD2611E62700F3FE4D /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				CE4418E32611E6C900F3FE4D /* gramophone.usdz */,
+				CE4418DE2611E66100F3FE4D /* tv_retro.usdz */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -271,8 +285,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CE4418DF2611E66100F3FE4D /* tv_retro.usdz in Resources */,
 				8BFEAD1325FE4F0800C364E0 /* Preview Assets.xcassets in Resources */,
 				8BFEAD1025FE4F0800C364E0 /* Assets.xcassets in Resources */,
+				CE4418E42611E6C900F3FE4D /* gramophone.usdz in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
