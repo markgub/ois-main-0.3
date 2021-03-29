@@ -17,6 +17,7 @@
 		8BFEAD1E25FE4F0800C364E0 /* OISTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BFEAD1D25FE4F0800C364E0 /* OISTests.swift */; };
 		8BFEAD2925FE4F0800C364E0 /* OISUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BFEAD2825FE4F0800C364E0 /* OISUITests.swift */; };
 		AD24A48051C70D82F36E67FD /* Pods_OIS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F0C34177D89E5A022F776A9 /* Pods_OIS.framework */; };
+		CEDB00CE2611C8DF00D4297D /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDB00CD2611C8DF00D4297D /* Coordinator.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +56,7 @@
 		8BFEAD2425FE4F0800C364E0 /* OISUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OISUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8BFEAD2825FE4F0800C364E0 /* OISUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OISUITests.swift; sourceTree = "<group>"; };
 		8BFEAD2A25FE4F0800C364E0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CEDB00CD2611C8DF00D4297D /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -125,6 +127,7 @@
 				8BFEAD0F25FE4F0800C364E0 /* Assets.xcassets */,
 				8BFEAD1425FE4F0800C364E0 /* Info.plist */,
 				8BFEAD1125FE4F0800C364E0 /* Preview Content */,
+				CEDB00CD2611C8DF00D4297D /* Coordinator.swift */,
 			);
 			path = OIS;
 			sourceTree = "<group>";
@@ -338,6 +341,7 @@
 			files = (
 				8BFEAD0E25FE4F0500C364E0 /* LoginPageView.swift in Sources */,
 				8BFEAD0C25FE4F0500C364E0 /* OISApp.swift in Sources */,
+				CEDB00CE2611C8DF00D4297D /* Coordinator.swift in Sources */,
 				8BF1D4C825FEB6DF003A4724 /* MainPageView.swift in Sources */,
 				8B75C80025FECBA600DC6D3B /* LatestGradesView.swift in Sources */,
 				8B75C7FB25FEC79200DC6D3B /* LessonsShortView.swift in Sources */,
